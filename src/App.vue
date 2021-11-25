@@ -2,7 +2,7 @@
   <div id="app">
     <div><FirebaseApp /></div>
     <div><ExampleApp /></div>
-    <div>コードをここに書く</div>
+    <div>コードをここに書きます</div>
   </div>
 </template>
 
@@ -16,9 +16,6 @@ export default {
     ExampleApp,
   },
   data: {
-    return{
-      
-    }
   }
 }
 </script>
