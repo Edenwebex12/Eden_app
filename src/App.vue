@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div><FirebaseApp /></div>
-    <div><ExampleApp /></div>
   </div>
 </template>
 
