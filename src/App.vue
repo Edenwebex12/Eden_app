@@ -15,6 +15,11 @@ export default {
     FirebaseApp,
     ExampleApp,
   },
+  data: {
+    return{
+      
+    }
+  }
 }
 </script>
 
