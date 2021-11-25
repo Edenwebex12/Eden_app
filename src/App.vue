@@ -16,6 +16,9 @@ export default {
     ExampleApp,
   },
   data: {
+    return() {
+      
+    }
   }
 }
 </script>
