@@ -1,15 +1,14 @@
 import firebase from "firebase"
 import "firebase/firestore"
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA1xkuUFLKrvgLLACo6zgaXqHpdGrK6O8U",
-  authDomain: "my-project-8ec10.firebaseapp.com",
-  projectId: "my-project-8ec10",
-  storageBucket: "my-project-8ec10.appspot.com",
-  messagingSenderId: "750697718753",
-  appId: "1:750697718753:web:3fb5053b24eb4f08d0e8a0",
-  measurementId: "G-W3M96B3W4J",
+  apiKey: "AIzaSyDUMsT_FpSjgaFmywvYYo3c3_qYOowwyD0",
+  authDomain: "eden-firebase.firebaseapp.com",
+  projectId: "eden-firebase",
+  storageBucket: "eden-firebase.appspot.com",
+  messagingSenderId: "680897385650",
+  appId: "1:680897385650:web:656078e74e649f2d9225ab",
+  measurementId: "G-7RXTD74H68",
 }
 
 firebase.initializeApp(firebaseConfig)

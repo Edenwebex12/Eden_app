@@ -8,12 +8,10 @@
 
 <script>
 import FirebaseApp from "@/components/FirebaseApp.vue"
-import ExampleApp from "@/components/ExampleApp.vue"
 export default {
   name: "App",
   components: {
     FirebaseApp,
-    ExampleApp,
   },
   data: function () {
     return {
