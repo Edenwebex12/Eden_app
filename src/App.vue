@@ -12,8 +12,7 @@ import ExampleApp from "@/components/ExampleApp.vue"
 export default {
   name: "App",
   components: {
-    FirebaseApp,
-    ExampleApp,
+    FirebaseApp
   },
   data: {
     return() {
