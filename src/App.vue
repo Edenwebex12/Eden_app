@@ -2,6 +2,7 @@
   <div id="app">
     <div><FirebaseApp /></div>
     <div><ExampleApp /></div>
+    <div>コードをここに書く</div>
   </div>
 </template>
 
