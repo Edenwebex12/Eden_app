@@ -2,7 +2,6 @@
   "name": "webexpert-firebase-app",
   "version": "0.1.0",
   "private": true,
-  "description": "",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -32,8 +31,7 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
+      "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
@@ -45,5 +43,6 @@
     "last 2 versions",
     "not dead"
   ],
-  "keywords": []
+  "keywords": [],
+  "description": ""
 }
