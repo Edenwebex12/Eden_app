@@ -2,22 +2,30 @@
   <div id="top">
     <div class="title"><h2>日記</h2></div>
     <div><NavBar /></div>
-    <div class="posts"></div>
-    <div v-for="(message, index) in messages" v-bind:key="index">
-      {{ message.text }}
+    <div v-for="(message, index) in messages" v-bind:key="index" class="posts">
+      <div class="message-header">
+        <div>{{ message.title }}</div>
+        <div>{{ message.date }}</div>
+        <div>{{ message.emotion }}</div>
+      </div>
+      <div>{{ message.text }}</div>
+      <div>{{ message.photo }}</div>
+      <div class="message-buttons">
+        <a class="message-button">編集</a>
+        <a class="message-button">削除</a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar"
+import Form from "@/components/Form"
 import firebase from "firebase"
 
 export default {
-  name: "top",
   components: {
     NavBar,
-    firebase,
   },
   data() {
     return {
@@ -26,7 +34,13 @@ export default {
   },
   methods: {
     postMessage() {
-      const data = { text: this.message }
+      const data = {
+        title: Form.textlines,
+        date: Form.textlines,
+        emotion: Form.emotion,
+        text: Form.textlines_honbun,
+        photo: Form.add,
+      }
       firebase
         .firestore()
         .collection("messages")
@@ -79,5 +93,14 @@ export default {
   display: flex;
   justify-content: flex-start;
   padding-left: 10%;
+}
+
+.message-buttons {
+  font-family: sans-serif;
+  color: #b1221a;
+}
+
+.message-button {
+  padding: 1.5rem;
 }
 </style>

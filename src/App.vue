@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <div><Top /></div>
+    <div><Form /></div>
   </div>
 </template>
 
 <script>
 import Top from "@/components/Top.vue"
+import Form from "@/components/Form.vue"
 
 export default {
   name: "App",
   components: {
     Top,
+    Form,
   },
 }
 </script>

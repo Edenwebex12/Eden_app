@@ -1,9 +1,9 @@
 <template>
   <div id="NavBar">
     <ul class="contents">
-      <li class="content">Top</li>
-      <li class="content">Post</li>
-      <li class="content">Schedule</li>
+      <li class="content">TOP</li>
+      <li class="content">POST</li>
+      <li class="content">SCHEDULE</li>
     </ul>
   </div>
 </template>
