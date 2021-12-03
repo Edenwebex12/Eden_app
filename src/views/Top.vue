@@ -20,7 +20,6 @@
 
 <script>
 import NavBar from "@/components/NavBar"
-import Form from "@/components/Form"
 import firebase from "firebase"
 
 export default {
@@ -35,11 +34,11 @@ export default {
   methods: {
     postMessage() {
       const data = {
-        title: Form.textlines,
-        date: Form.textlines,
-        emotion: Form.emotion,
-        text: Form.textlines_honbun,
-        photo: Form.add,
+        title: this.textlines,
+        date: this.textlines,
+        emotion: this.emotion,
+        text: this.textlines_honbun,
+        photo: this.add,
       }
       firebase
         .firestore()

@@ -1,26 +1,26 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
-import Home from "../views/Home.vue"
-import About from "../views/About.vue"
-import MyPage from "../views/MyPage.vue"
+import Top from "../views/Top.vue"
+import Form from "../views/Form.vue"
+import Schedule from "../views/Schedule.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Top",
+    component: Top,
   },
   {
-    path: "/about",
-    name: "About",
-    component: About,
+    path: "/Form",
+    name: "Form",
+    component: Form,
   },
   {
-    path: "/my-page",
-    name: "MyPage",
-    component: MyPage,
+    path: "/Schedule",
+    name: "Schedule",
+    component: Schedule,
   },
 ]
 
