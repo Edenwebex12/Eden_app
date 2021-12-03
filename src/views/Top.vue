@@ -2,29 +2,37 @@
   <div id="top">
     <div class="title"><h2>日記</h2></div>
     <div><NavBar /></div>
-    <div v-for="(message, index) in messages" v-bind:key="index" class="posts">
-      <div class="message-header">
-        <div>{{ message.title }}</div>
-        <div>{{ message.date }}</div>
-        <div>{{ message.emotion }}</div>
+    <Posts
+      v-for="(message, index) in messages"
+      v-bind:key="index"
+      class="posts"
+    >
+      <div class="post">
+        <div class="message-header">
+          <div>{{ message.title }}</div>
+          <div>{{ message.date }}</div>
+          <div>{{ message.emotion }}</div>
+        </div>
+        <div>{{ message.text }}</div>
+        <div>{{ message.photo }}</div>
+        <div class="message-buttons">
+          <a class="message-button">編集</a>
+          <a class="message-button">削除</a>
+        </div>
       </div>
-      <div>{{ message.text }}</div>
-      <div>{{ message.photo }}</div>
-      <div class="message-buttons">
-        <a class="message-button">編集</a>
-        <a class="message-button">削除</a>
-      </div>
-    </div>
+    </Posts>
   </div>
 </template>
 
 <script>
-import NavBar from "@/components/NavBar"
+import NavBar from "@/components/NavBar.vue"
+import Posts from "@/components/Posts.vue"
 import firebase from "firebase"
 
 export default {
   components: {
     NavBar,
+    Posts,
   },
   data() {
     return {
@@ -101,5 +109,8 @@ export default {
 
 .message-button {
   padding: 1.5rem;
+}
+.post {
+  background-color: #fff3b8;
 }
 </style>

@@ -1,9 +1,11 @@
 <template>
   <div id="NavBar">
     <ul class="contents">
-      <li class="content">TOP</li>
-      <li class="content">POST</li>
-      <li class="content">SCHEDULE</li>
+      <li class="content"><router-link to="/">TOP</router-link></li>
+      <li class="content"><router-link to="/Form">POST</router-link></li>
+      <li class="content">
+        <router-link to="/Schedule">SCHEDULE</router-link>
+      </li>
     </ul>
   </div>
 </template>
