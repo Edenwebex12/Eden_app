@@ -1,28 +1,16 @@
 <template>
-  <div id="app">
-    <div><Top /></div>
+  <div>
+    <NavBar />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Top from "@/components/Top.vue"
+import NavBar from "@/components/NavBar.vue"
 
 export default {
-  name: "App",
   components: {
-    Top,
+    NavBar,
   },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  width: 100%;
-}
-</style>
