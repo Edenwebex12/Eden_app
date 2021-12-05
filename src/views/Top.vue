@@ -1,6 +1,6 @@
 <template>
   <div id="top">
-    <div class="title"><h2>日記</h2></div>
+    <div class="title"><h2>My Diary</h2></div>
     <div><NavBar /></div>
     <div>
       <ul>
