@@ -13,10 +13,10 @@
             <div class="message-header">
               <div>{{ message.title }}</div>
               <div>{{ message.date }}</div>
-              <div>{{ message.emotion }}</div>
+              <div v-if="messages.emotion === happy">{{ message.emotion }}</div>
             </div>
             <div>{{ message.text }}</div>
-            <div>{{ message.photo }}</div>
+            <!-- <div>{{ message.photo }}</div> -->
             <div class="message-buttons">
               <a class="message-button">編集</a>
               <a class="message-button">削除</a>
@@ -44,11 +44,11 @@ export default {
   methods: {
     postMessage() {
       const data = {
-        title: this.textlines,
-        date: this.textlines,
-        emotion: this.emotion,
-        text: this.textlines_honbun,
-        photo: this.add,
+        title: this.messages.title,
+        date: this.messages.data,
+        emotion: this.messages.emotion,
+        text: this.messages.text,
+        // photo: this.messages.add,
       }
       firebase
         .firestore()
@@ -67,7 +67,7 @@ export default {
         .firestore()
         .collection("messages")
         .where("text", "==", "こんにちは、メッセージの本文です。")
-        // .orderBy("text", "desc")
+        .orderBy("date", "desc")
         .limit(1)
         .get()
         .then((snapshot) => {
