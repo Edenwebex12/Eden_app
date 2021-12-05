@@ -119,5 +119,9 @@ input[type="radio"] + label:before {
   background-size: contain;
   width: 210px;
   height: 210px;
+  display: block;
+}
+input[type="radio"][value="happy"] + label:before {
+  background-image: url("../assets/images/Happy.jpg");
 }
 </style>
