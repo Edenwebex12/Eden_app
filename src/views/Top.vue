@@ -12,25 +12,42 @@
           v-bind:key="index"
           class="posts"
         >
+          <!-- <database
+            :title="message.title"
+            :date="message.date"
+            :emotion="message.emotion"
+            :text="message.text"
+          /> -->
           <div class="post">
             <div class="message-header">
-              <div>{{ message.title }}</div>
-              <div>{{ message.date }}</div>
+              <div class="date">{{ message.date }}</div>
+              <div class="postTitle">{{ message.title }}</div>
               <div class="emotion">
-                <div v-if="emotions[0]">
+                <div v-if="emochan(message.emotion) === 1">
                   <img src="./components/images/Happy.png" />
                 </div>
-              </div>
-              <div>
-                {{ message.emotion }}
+                <div v-else-if="emochan(message.emotion) === 2">
+                  <img src="./components/images/Asease.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 3">
+                  <img src="./components/images/Cry.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 4">
+                  <img src="./components/images/Wink.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 5">
+                  <img src="./components/images/Atyaa.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 6">
+                  <img src="./components/images/Angry.png" />
+                </div>
               </div>
             </div>
-            <div><div></div></div>
-            <div>{{ message.text }}</div>
+            <div class="messageText">{{ message.text }}</div>
             <!-- <div>{{ message.photo }}</div> -->
             <div class="message-buttons">
-              <router-link to="/Form">編集</router-link>
-              <a href="#" v-on:click="keikoku(index)" class="message-button"
+              <router-link to="/Form" class="editButton">編集</router-link>
+              <a href="#" v-on:click="keikoku(message)" class="deleteButton"
                 >削除</a
               >
             </div>
@@ -44,58 +61,35 @@
 <script>
 import NavBar from "@/views/components/NavBar.vue"
 import firebase from "firebase"
+// import database from "@/views/components/database.vue"
 
 export default {
   components: {
     NavBar,
+    // database,
   },
   data() {
     return {
       messages: [],
-      emotions: [false, false, false, false, false, false],
     }
   },
   methods: {
-    emochan() {
-      if (this.messages.emotion === "happy") {
-        this.emotions[0] = true
-      } else if (this.messages.emotion === "asease") {
-        this.emotions[1] = true
-      } else if (this.messages.emotion === "cry") {
-        this.emotions[2] = true
-      } else if (this.messages.emotion === "wink") {
-        this.emotions[3] = true
-      } else if (this.messages.emotion === "atyaa") {
-        this.emotions[4] = true
-      } else if (this.messages.emotion === "angry") {
-        this.emotions[5] = true
+    emochan(emotion) {
+      if (emotion === "happy") {
+        return 1
+      } else if (emotion === "asease") {
+        return 2
+      } else if (emotion === "cry") {
+        return 3
+      } else if (emotion === "wink") {
+        return 4
+      } else if (emotion === "atyaa") {
+        return 5
+      } else if (emotion === "angry") {
+        return 6
+      } else {
+        return 0
       }
-    },
-    postMessage() {
-      const data = {
-        title: this.messages.title,
-        date: this.message.data,
-        emotion: [this.messages.emotion],
-        text: this.messages.text,
-        // photo: this.messages.add,
-      }
-      this.emochan()
-      firebase
-        .firestore()
-        .collection("messages")
-        .add(data)
-        .then(() => {
-          this.messages.push(data)
-        })
-    },
-    postTest() {
-      const data = {
-        date: this.messages.date,
-        title: this.messages.title,
-        emotion: this.messages.emotion,
-        text: this.messages.text,
-      }
-      firebase.firestore().collection("test").doc("0").set(data)
     },
     getHello() {
       firebase
@@ -111,16 +105,13 @@ export default {
           })
         })
     },
-    keikoku(index) {
+    keikoku(message) {
       const res = window.confirm(
-        `${this.messages.date}の投稿を削除します。よろしいですか？`
+        `${this.message.date}の投稿を削除します。よろしいですか？`
       )
       if (res) {
-        this.Delete(index)
+        firebase.collection("messages").doc(message.id).delete()
       }
-    },
-    Delete(index) {
-      this.messages.splice(index, 1)
     },
   },
   created() {
@@ -154,6 +145,8 @@ export default {
 .plus {
   display: flex;
   justify-content: center;
+  padding-top: 1%;
+  padding-bottom: 0.1%;
 }
 
 .message-buttons {
@@ -166,5 +159,49 @@ export default {
 }
 .post {
   background-color: #fff3b8;
+  margin-bottom: 5%;
+  margin-right: 10%;
+  margin-left: 10%;
+  border-radius: 2rem;
+  font-family: sans-serif;
+}
+
+.message-header {
+  display: flex;
+  padding-top: 5%;
+  padding-left: 5%;
+  padding-bottom: 2%;
+}
+
+.date {
+  padding-right: 3%;
+  font-size: 16px;
+}
+
+.postTitle {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.emotion {
+  padding-left: 20%;
+}
+
+.messageText {
+  font-size: 14px;
+  padding-left: 5%;
+  padding-right: 30%;
+}
+
+.message-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 8%;
+  padding-bottom: 2%;
+  color: #b1221a;
+}
+.editButton {
+  padding-right: 5%;
 }
 </style>
