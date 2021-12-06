@@ -2,6 +2,9 @@
   <div id="top">
     <div class="title"><h2>My Diary</h2></div>
     <div><NavBar /></div>
+    <router-link to="/Form" class="plus"
+      ><img src="./components/images/プラスボタン.png"
+    /></router-link>
     <div>
       <ul>
         <div
@@ -13,13 +16,23 @@
             <div class="message-header">
               <div>{{ message.title }}</div>
               <div>{{ message.date }}</div>
-              <div v-if="messages.emotion === happy">{{ message.emotion }}</div>
+              <div class="emotion">
+                <div v-if="emotions[0]">
+                  <img src="./components/images/Happy.png" />
+                </div>
+              </div>
+              <div>
+                {{ message.emotion }}
+              </div>
             </div>
+            <div><div></div></div>
             <div>{{ message.text }}</div>
             <!-- <div>{{ message.photo }}</div> -->
             <div class="message-buttons">
-              <a class="message-button">編集</a>
-              <a class="message-button">削除</a>
+              <router-link to="/Form">編集</router-link>
+              <a href="#" v-on:click="keikoku(index)" class="message-button"
+                >削除</a
+              >
             </div>
           </div>
         </div>
@@ -39,17 +52,34 @@ export default {
   data() {
     return {
       messages: [],
+      emotions: [false, false, false, false, false, false],
     }
   },
   methods: {
+    emochan() {
+      if (this.messages.emotion === "happy") {
+        this.emotions[0] = true
+      } else if (this.messages.emotion === "asease") {
+        this.emotions[1] = true
+      } else if (this.messages.emotion === "cry") {
+        this.emotions[2] = true
+      } else if (this.messages.emotion === "wink") {
+        this.emotions[3] = true
+      } else if (this.messages.emotion === "atyaa") {
+        this.emotions[4] = true
+      } else if (this.messages.emotion === "angry") {
+        this.emotions[5] = true
+      }
+    },
     postMessage() {
       const data = {
         title: this.messages.title,
-        date: this.messages.data,
-        emotion: this.messages.emotion,
+        date: this.message.data,
+        emotion: [this.messages.emotion],
         text: this.messages.text,
         // photo: this.messages.add,
       }
+      this.emochan()
       firebase
         .firestore()
         .collection("messages")
@@ -59,7 +89,12 @@ export default {
         })
     },
     postTest() {
-      const data = { text: "ハロー" }
+      const data = {
+        date: this.messages.date,
+        title: this.messages.title,
+        emotion: this.messages.emotion,
+        text: this.messages.text,
+      }
       firebase.firestore().collection("test").doc("0").set(data)
     },
     getHello() {
@@ -76,11 +111,23 @@ export default {
           })
         })
     },
+    keikoku(index) {
+      const res = window.confirm(
+        `${this.messages.date}の投稿を削除します。よろしいですか？`
+      )
+      if (res) {
+        this.Delete(index)
+      }
+    },
+    Delete(index) {
+      this.messages.splice(index, 1)
+    },
   },
   created() {
     firebase
       .firestore()
       .collection("messages")
+      .orderBy("date", "desc")
       .get()
       .then((snapshot) => {
         for (let i = 0; i < snapshot.docs.length; i++) {
@@ -102,6 +149,11 @@ export default {
   display: flex;
   justify-content: flex-start;
   padding-left: 10%;
+}
+
+.plus {
+  display: flex;
+  justify-content: center;
 }
 
 .message-buttons {
