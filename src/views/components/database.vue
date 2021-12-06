@@ -1,24 +1,76 @@
 <template>
   <div class="forms">
-    <div>
-      <input
-        type="date"
-        class="title"
-        name="date"
-        size="15"
-        v-model="messages.date"
-      />
-      <div>
+    <div class="form">
+      <div class="up">
+        <input
+          type="date"
+          class="date"
+          name="date"
+          size="15"
+          v-model="messages.date"
+        />
         <div>
-          <label class="daimei">題名</label><br /><input
-            type="text"
-            class="title"
-            name="title"
-            size="40"
-            v-model="messages.title"
-          />
+          <div class="emotions">
+            <div class="emoTop">
+              <input
+                type="radio"
+                name="emotionSelect"
+                value="happy"
+                id="emotionHappy"
+                v-model="messages.emotion"
+                checked
+              /><label for="emotionHappy" />
+              <input
+                type="radio"
+                name="emotionSelect"
+                value="asease"
+                id="emotionAsease"
+                v-model="messages.emotion"
+              /><label for="emotionAsease" />
+              <input
+                type="radio"
+                name="emotionSelect"
+                value="cry"
+                id="emotionCry"
+                v-model="messages.emotion"
+              /><label for="emotionCry" />
+            </div>
+            <div class="emoBottom">
+              <input
+                type="radio"
+                name="emotionSelect"
+                value="wink"
+                id="emotionWink"
+                v-model="messages.emotion"
+              /><label for="emotionWink" />
+              <input
+                type="radio"
+                name="emotionSelect"
+                value="atyaa"
+                id="emotionAtyaa"
+                v-model="messages.emotion"
+              /><label for="emotionAtyaa" />
+              <input
+                type="radio"
+                name="emotionSelect"
+                value="angry"
+                id="emotionAngry"
+                v-model="messages.emotion"
+              /><label for="emotionAngry" />
+            </div>
+          </div>
         </div>
-        <!-- <div>
+      </div>
+      <div>
+        <label class="daimei">題名</label><br /><input
+          type="text"
+          class="title"
+          name="title"
+          size="40"
+          v-model="messages.title"
+        />
+      </div>
+      <!-- <div>
           <label>画像アップロード</label><br />
           <input
             type="file"
@@ -28,52 +80,7 @@
             @change="addFile"
           />
         </div> -->
-      </div>
-      <div class="emotions">
-        <input
-          type="radio"
-          name="emotionSelect"
-          value="happy"
-          id="emotionHappy"
-          v-model="messages.emotion"
-          checked
-        /><label for="emotionHappy" />
-        <input
-          type="radio"
-          name="emotionSelect"
-          value="asease"
-          id="emotionAsease"
-          v-model="messages.emotion"
-        /><label for="emotionAsease" />
-        <input
-          type="radio"
-          name="emotionSelect"
-          value="cry"
-          id="emotionCry"
-          v-model="messages.emotion"
-        /><label for="emotionCry" />
-        <input
-          type="radio"
-          name="emotionSelect"
-          value="wink"
-          id="emotionWink"
-          v-model="messages.emotion"
-        /><label for="emotionWink" />
-        <input
-          type="radio"
-          name="emotionSelect"
-          value="atyaa"
-          id="emotionAtyaa"
-          v-model="messages.emotion"
-        /><label for="emotionAtyaa" />
-        <input
-          type="radio"
-          name="emotionSelect"
-          value="angry"
-          id="emotionAngry"
-          v-model="messages.emotion"
-        /><label for="emotionAngry" />
-      </div>
+
       <div>※本文</div>
       <textarea
         name="kanso"
@@ -82,13 +89,14 @@
         cols="80"
         v-model="messages.text"
       ></textarea>
-      <button v-on:click="sendPost" class="submit">投稿</button>
+      <button v-on:click="sendPost()" class="submit">投稿</button>
     </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase"
+
 export const storage = firebase.storage()
 export default {
   data() {
@@ -98,7 +106,6 @@ export default {
         title: "",
         emotion: "",
         text: "",
-        photo: "",
       },
     }
   },
@@ -121,7 +128,11 @@ export default {
         text: this.messages.text,
         // photo: this.messages.photo,
       }
-      firebase.firestore().collection("messages").add(post)
+      if (this.messages.text === "") {
+        alert("本文を投稿してください")
+      } else {
+        firebase.firestore().collection("messages").add(post)
+      }
       //   firebase
       //     .firestore()
       //     .collestion("messages")
@@ -171,5 +182,23 @@ input[type="radio"][value="angry"] + label:before {
 }
 .daimei {
   padding-right: 3rem;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.up {
+  display: flex;
+  flex-direction: row;
+  padding-top: 3%;
+}
+.date {
+  padding: 0;
+  margin-right: 5%;
+}
+.emotions {
+  padding-right: 10%;
 }
 </style>
