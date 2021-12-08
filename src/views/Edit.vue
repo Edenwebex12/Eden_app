@@ -2,36 +2,43 @@
   <div class="forms">
     <div class="pagetitle"><h2>投稿フォーム</h2></div>
     <div><NavBar /></div>
-    <div class="form"><database /></div>
+    <div class="form"><database2 :message="message" /></div>
   </div>
 </template>
 
 <script>
+import firebase from "firebase"
 import NavBar from "@/views/components/NavBar.vue"
-import database from "@/views/components/database.vue"
+import database2 from "@/views/components/database2.vue"
 export default {
-  // props: ["EventBus"],
   components: {
     NavBar,
-    database,
+    database2,
   },
   data() {
     return {
       message: "",
     }
   },
-  // mounted() {
-  //   if (this.EventBus) {
-  //     this.EventBus.$on("click-event", this.editpage)
-  //   }
-  // },
   methods: {
     editpage(message) {
       return {
         message: message,
-        // edit: true,
       }
     },
+    getData() {
+      firebase
+        .firestore()
+        .collection("messages")
+        .doc(this.$route.params["id"])
+        .get()
+        .then((snapshot) => {
+          this.message = snapshot
+        })
+    },
+  },
+  created() {
+    this.getData()
   },
 }
 </script>

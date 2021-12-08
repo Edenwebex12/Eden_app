@@ -9,11 +9,11 @@
             name="date"
             size="15"
             v-model="messages.date"
-            placeholder=""
+            placeholder="message.date"
             id="date"
           />
           <div>
-            <emotionSelect v-on:emoselect="selectEmotion" />
+            <emotionSelect2 :emo="messages.emotion" />
           </div>
         </div>
         <div class="middle">
@@ -24,7 +24,7 @@
             name="title"
             size="40"
             v-model="messages.title"
-            placeholder=""
+            placeholder="message.title"
           />
         </div>
         <!-- <div>
@@ -46,11 +46,11 @@
             rows="10"
             cols="80"
             v-model="messages.text"
-            placeholder=""
+            value="message.text"
           ></textarea>
         </div>
         <div class="button">
-          <button v-on:click="sendPost()" class="submit">投稿</button>
+          <button v-on:click="sendPost()" class="submit">編集</button>
         </div>
       </div>
     </div>
@@ -59,12 +59,13 @@
 
 <script>
 import firebase from "firebase"
-import emotionSelect from "@/views/components/emotionSelect/emotionSelect"
+import emotionSelect2 from "@/views/components/emotionSelect/emotionSelect"
 
 export const storage = firebase.storage()
 export default {
+  props: ["message"],
   components: {
-    emotionSelect,
+    emotionSelect2,
   },
   data() {
     return {
@@ -82,9 +83,6 @@ export default {
     //   let files = e.target.files
     //   this.messages.photo = files[0]
     // },
-    selectEmotion(emo) {
-      this.messages.emotion = emo
-    },
     sendPost() {
       //   let storageRef = firebase
       //     .storage()
@@ -119,15 +117,16 @@ export default {
       //       })
       //     })
     },
-    // place() {
-    //   const date = document.getElementById("date")
-    //   const title = document.getElementById("title")
-    //   const text = document.getElementById("text")
-    //   date.placeholder = this.editpage.message.date
-    //   title.placeholder = this.editpage.message.title
-    //   text.placeholder = this.editpage.message.text
-    // },
   },
+  //   place() {
+  //     const date = document.getElementById("date")
+  //     const title = document.getElementById("title")
+  //     const text = document.getElementById("text")
+  //     date.placeholder = this.editpage.message.date
+  //     title.placeholder = this.editpage.message.title
+  //     text.placeholder = this.editpage.message.text
+  //   },
+  // },
   // mounted: function () {
   //   if (this.editpage) {
   //     this.place()

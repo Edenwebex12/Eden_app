@@ -12,19 +12,22 @@
 
 <style>
 #NavBar {
-  padding: 0.1%;
+  padding-top: 0.1%;
   background-color: #b1221a;
   display: flex;
   justify-content: flex-end;
-  box-sizing: 100%;
+  width: 100%;
+  margin-left: 0rem;
 }
+
 .contents {
   display: flex;
   list-style-type: none;
   flex-direction: row;
   justify-content: space-around;
   align-items: baseline;
-  margin-right: 7%;
+  margin-right: 15%;
+  box-sizing: 30%;
 }
 .content {
   padding-right: 40%;

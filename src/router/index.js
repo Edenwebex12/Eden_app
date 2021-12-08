@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 import Top from "../views/Top.vue"
 import Form from "../views/Form.vue"
 import Schedule from "../views/Schedule.vue"
+import Edit from "../views/Edit.vue"
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/Schedule",
     name: "Schedule",
     component: Schedule,
+  },
+  {
+    path: "/Edit/:id",
+    name: "Edit",
+    component: Edit,
   },
 ]
 
