@@ -22,6 +22,7 @@
             <div class="message-header">
               <div class="date">{{ message.date }}</div>
               <div class="postTitle">{{ message.title }}</div>
+              <!-- <div class="name">{{ message.name }}</div> -->
               <emotion :emo="message.emotion" />
             </div>
             <div class="messageText">{{ message.text }}</div>
@@ -31,14 +32,24 @@
                 :to="{
                   name: 'Edit',
                   params: {
-                    id: `${message.date + message.title + message.emotion}`,
+                    id: `${
+                      message.date +
+                      message.name +
+                      message.title +
+                      message.emotion
+                    }`,
                   },
                 }"
                 class="editButton"
                 @click="edit(message, index)"
+                v-if="pass === message.pass"
                 >編集</router-link
               >
-              <a href="#" v-on:click="keikoku(message)" class="deleteButton"
+              <a
+                href="#"
+                v-on:click="keikoku(message)"
+                class="deleteButton"
+                v-if="pass === message.pass"
                 >削除</a
               >
             </div>
@@ -66,6 +77,7 @@ export default {
     return {
       messages: [],
       emo: "",
+      name: "",
     }
   },
   methods: {
@@ -91,15 +103,29 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${message.date + message.title + message.emotion}`)
+          .doc(`${message.date +  message.title + message.emotion}`)
           .delete()
         location.reload()
       }
+    },
+    mypost() {
+      firebase
+        .firestore()
+        .collection("messages")
+        .where(this.name === this.message.name)
+        .orderBy("date", "desc")
+        .get()
+        .then((snapshot) => {
+          for (let i = 0; i < snapshot.docs.length; i++) {
+            this.messages.push(snapshot.docs[i].data())
+          }
+        })
     },
   },
   created() {
     firebase
       .firestore()
+      // .doc(`users/${user.uid}`)
       .collection("messages")
       .orderBy("date", "desc")
       .get()
@@ -165,8 +191,13 @@ export default {
   font-size: 20px;
 }
 
+.name {
+  padding-left: 1rem;
+}
+
 .emotion {
   padding-left: 20%;
+  padding-top: 0.2%;
 }
 
 .messageText {

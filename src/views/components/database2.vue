@@ -102,8 +102,8 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${post.date + post.title + post.emotion}`)
-          .set(post)
+          .doc(`${post.date +  post.title + post.emotion}`)
+          .update(this.messages)
         location.reload()
       }
       //   firebase

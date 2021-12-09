@@ -5,10 +5,32 @@
       <li class="content"><router-link to="/Form">POST</router-link></li>
       <li class="content">
         <router-link to="/Schedule">SCHEDULE</router-link>
+        <button class="btn btn-primary mb-3" @click="logoutUser">
+          ログアウト
+        </button>
       </li>
     </ul>
   </div>
 </template>
+
+<script>
+import firebase from "firebase"
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    }
+  },
+  methods: {
+    logoutUser() {
+      firebase.auth().signOut()
+      console.log("logout")
+      window.location.href = "/Login"
+    },
+  },
+}
+</script>
 
 <style>
 #NavBar {
