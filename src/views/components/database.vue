@@ -46,7 +46,7 @@
           />
         </div> -->
 
-        <!-- <div>
+          <!-- <div>
           <label>画像アップロード</label><br />
           <input
             type="file"
@@ -56,24 +56,24 @@
             @change="addFile"
           />
         </div> -->
-        <div class="bottom">
-          <div><span>※</span>本文</div>
-          <textarea
-            name="kanso"
-            class="text"
-            id="text"
-            rows="10"
-            cols="80"
-            v-model="messages.text"
-            placeholder=""
-          ></textarea>
-        </div>
-        <div class="button">
-          <button v-on:click="sendPost()" class="submit">投稿</button>
+          <div class="bottom">
+            <div><span>※</span>本文</div>
+            <textarea
+              name="kanso"
+              class="text"
+              id="text"
+              rows="10"
+              cols="80"
+              v-model="messages.text"
+              placeholder=""
+            ></textarea>
+          </div>
+          <div class="button">
+            <button v-on:click="sendPost()" class="submit">投稿</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -93,8 +93,6 @@ export default {
         title: "",
         emotion: "",
         text: "",
-        name: "",
-        pass: "",
       },
     }
   },
@@ -118,8 +116,6 @@ export default {
         title: this.messages.title,
         emotion: this.messages.emotion,
         text: this.messages.text,
-        name: this.messages.name,
-        pass: this.messages.pass,
         // photo: this.messages.photo,
       }
       if (this.messages.text === "") {
@@ -128,7 +124,7 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${this.messages.date}+${this.messages.title}+${this.messages.emotion}`)
+          .doc(`${this.messages.date} + ${this.messages.title} `)
           .set(post)
         location.reload()
       }

@@ -4,32 +4,52 @@
       <li class="content"><router-link to="/">TOP</router-link></li>
       <li class="content"><router-link to="/Form">POST</router-link></li>
       <li class="content">
-        <router-link to="/Schedule">SCHEDULE</router-link>
-        <button class="btn btn-primary mb-3" @click="logoutUser">
-          ログアウト
-        </button>
+        <button id="Logout" v-on:click="Logout">ログアウト</button>
       </li>
     </ul>
   </div>
 </template>
 
+//
 <script>
 import firebase from "firebase"
+
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      user: this.user,
     }
   },
   methods: {
-    logoutUser() {
-      firebase.auth().signOut()
-      console.log("logout")
-      window.location.href = "/Login"
+    Logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.user = null
+        })
+      window.location.href = "/"
     },
   },
 }
+
+// import firebase from "firebase"
+// export default {
+//   data() {
+//     return {
+//       email: "",
+//       password: "",
+//     }
+//   },
+//   methods: {
+//     logoutUser() {
+//       firebase.auth().signOut()
+//       console.log("logout")
+//       window.location.href = "/Login"
+//     },
+//   },
+// }
+//
 </script>
 
 <style>

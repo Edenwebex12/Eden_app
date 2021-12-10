@@ -102,21 +102,21 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${post.date +  post.title + post.emotion}`)
+          .doc(`${post.date} + ${post.title}`)
           .update(this.messages)
         location.reload()
       }
-      //   firebase
-      //     .firestore()
-      //     .collestion("messages")
-      //     .add(post)
-      //     .then((ref) => {
-      //       this.messages.push({
-      //         id: ref.id,
-      //         ...post,
-      //       })
-      //     })
     },
+    //   firebase
+    //     .firestore()
+    //     .collestion("messages")
+    //     .add(post)
+    //     .then((ref) => {
+    //       this.messages.push({
+    //         id: ref.id,
+    //         ...post,
+    //       })
+    //     })
   },
   //   place() {
   //     const date = document.getElementById("date")
@@ -132,6 +132,9 @@ export default {
   //     this.place()
   //   }
   // },
+  created() {
+    console.log(this.message.text)
+  },
 }
 </script>
 

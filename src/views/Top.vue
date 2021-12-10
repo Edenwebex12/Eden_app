@@ -32,24 +32,13 @@
                 :to="{
                   name: 'Edit',
                   params: {
-                    id: `${
-                      message.date +
-                      message.name +
-                      message.title +
-                      message.emotion
-                    }`,
+                    id: `${message.date} + ${message.title} `,
                   },
                 }"
                 class="editButton"
-                @click="edit(message, index)"
-                v-if="pass === message.pass"
                 >編集</router-link
               >
-              <a
-                href="#"
-                v-on:click="keikoku(message)"
-                class="deleteButton"
-                v-if="pass === message.pass"
+              <a href="#" v-on:click="keikoku(message)" class="deleteButton"
                 >削除</a
               >
             </div>
@@ -77,10 +66,18 @@ export default {
     return {
       messages: [],
       emo: "",
-      name: "",
+      user: {
+        id: "",
+        email: "",
+        name: "",
+        sex: "",
+      },
     }
   },
   methods: {
+    toHome() {
+      this.$router.push("/Mypage")
+    },
     getHello() {
       firebase
         .firestore()
@@ -103,7 +100,7 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${message.date +  message.title + message.emotion}`)
+          .doc(`${message.date} + ${message.title} `)
           .delete()
         location.reload()
       }
@@ -133,6 +130,18 @@ export default {
         for (let i = 0; i < snapshot.docs.length; i++) {
           this.messages.push(snapshot.docs[i].data())
         }
+      })
+    const uid = firebase.auth().currentUser.uid
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .get()
+      .then((doc) => {
+        this.user.id = doc.data().id
+        this.user.email = doc.data().email
+        this.user.name = doc.data().name
+        this.user.sex = doc.data().sex
       })
   },
 }

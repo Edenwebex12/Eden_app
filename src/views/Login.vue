@@ -38,8 +38,8 @@ export default {
     return {
       // email: "",
       // password: "",
-      loginEmail:"",
-      loginPassword:"",
+      loginEmail: "",
+      loginPassword: "",
     }
   },
   methods: {
@@ -54,21 +54,22 @@ export default {
           console.log(errorCode)
           console.log(errorMessage)
         })
- firebase.firestore()
-  .collection('users')
-  .doc('name')
-  .get()
-  .then(function(doc) {
-    if (doc) {
-      // do something
-      // doc.data() でデータを取得
-    } else {
-     console.log("No user");
-    }
-  })
-  .catch(function(error) {
-   console.log("Error : ", error);
-  })
+      firebase
+        .firestore()
+        .collection("users")
+        .doc("name")
+        .get()
+        .then(function (doc) {
+          if (doc) {
+            // do something
+            // doc.data() でデータを取得
+          } else {
+            console.log("No user")
+          }
+        })
+        .catch(function (error) {
+          console.log("Error : ", error)
+        })
       window.location.href = "/"
     },
   },

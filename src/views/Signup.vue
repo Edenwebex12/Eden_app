@@ -63,7 +63,7 @@ export default {
           console.log(errorCode)
           console.log(errorMessage)
         })
-        window.location.href = '/Login'
+      window.location.href = "/Login"
       //   firebase
       //     .firestore()
       //     .collection("users")

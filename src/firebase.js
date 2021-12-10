@@ -10,8 +10,8 @@ const firebaseConfig = {
   storageBucket: "eden-firebase.appspot.com",
   messagingSenderId: "680897385650",
   appId: "1:680897385650:web:656078e74e649f2d9225ab",
-  measurementId: "${config.measurementId}"
-};
+  measurementId: "${config.measurementId}",
+}
 
 firebase.getCurrentUser = () => {
   return new Promise((resolve, reject) => {
