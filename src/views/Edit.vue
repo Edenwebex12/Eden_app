@@ -17,15 +17,15 @@ export default {
   },
   data() {
     return {
-      message: "",
+      message: {},
     }
   },
   methods: {
-    editpage(message) {
-      return {
-        message: message,
-      }
-    },
+    // editpage(message) {
+    //   return {
+    //     message: message,
+    //   }
+    // },
     getData() {
       firebase
         .firestore()
@@ -34,6 +34,7 @@ export default {
         .get()
         .then((snapshot) => {
           this.message = snapshot
+          console.log(this.message.text)
         })
     },
   },

@@ -22,6 +22,7 @@
             <div class="message-header">
               <div class="date">{{ message.date }}</div>
               <div class="postTitle">{{ message.title }}</div>
+              <!-- <div class="name">{{ message.name }}</div> -->
               <emotion :emo="message.emotion" />
             </div>
             <div class="messageText">{{ message.text }}</div>
@@ -31,11 +32,10 @@
                 :to="{
                   name: 'Edit',
                   params: {
-                    id: `${message.date + message.title + message.emotion}`,
+                    id: `${message.date} + ${message.title} `,
                   },
                 }"
                 class="editButton"
-                @click="edit(message, index)"
                 >編集</router-link
               >
               <a href="#" v-on:click="keikoku(message)" class="deleteButton"
@@ -66,9 +66,18 @@ export default {
     return {
       messages: [],
       emo: "",
+      user: {
+        id: "",
+        email: "",
+        name: "",
+        sex: "",
+      },
     }
   },
   methods: {
+    toHome() {
+      this.$router.push("/Mypage")
+    },
     getHello() {
       firebase
         .firestore()
@@ -91,15 +100,29 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${message.date + message.title + message.emotion}`)
+          .doc(`${message.date} + ${message.title} `)
           .delete()
         location.reload()
       }
+    },
+    mypost() {
+      firebase
+        .firestore()
+        .collection("messages")
+        .where(this.name === this.message.name)
+        .orderBy("date", "desc")
+        .get()
+        .then((snapshot) => {
+          for (let i = 0; i < snapshot.docs.length; i++) {
+            this.messages.push(snapshot.docs[i].data())
+          }
+        })
     },
   },
   created() {
     firebase
       .firestore()
+      // .doc(`users/${user.uid}`)
       .collection("messages")
       .orderBy("date", "desc")
       .get()
@@ -107,6 +130,18 @@ export default {
         for (let i = 0; i < snapshot.docs.length; i++) {
           this.messages.push(snapshot.docs[i].data())
         }
+      })
+    const uid = firebase.auth().currentUser.uid
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .get()
+      .then((doc) => {
+        this.user.id = doc.data().id
+        this.user.email = doc.data().email
+        this.user.name = doc.data().name
+        this.user.sex = doc.data().sex
       })
   },
 }
@@ -165,8 +200,13 @@ export default {
   font-size: 20px;
 }
 
+.name {
+  padding-left: 1rem;
+}
+
 .emotion {
   padding-left: 20%;
+  padding-top: 0.2%;
 }
 
 .messageText {

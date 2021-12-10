@@ -26,8 +26,27 @@
             v-model="messages.title"
             placeholder=""
           />
-        </div>
-        <!-- <div>
+          <!-- <label class="namae">ニックネーム</label><br /><input
+            type="text"
+            class="name"
+            id="name"
+            name="name"
+            size="40"
+            v-model="messages.name"
+            placeholder=""
+          />
+          <label class="password">パスワード</label><br /><input
+            type="password"
+            class="pass"
+            id="pass"
+            name="pass"
+            size="40"
+            v-model="messages.pass"
+            placeholder=""
+          />
+        </div> -->
+
+          <!-- <div>
           <label>画像アップロード</label><br />
           <input
             type="file"
@@ -37,20 +56,21 @@
             @change="addFile"
           />
         </div> -->
-        <div class="bottom">
-          <div><span>※</span>本文</div>
-          <textarea
-            name="kanso"
-            class="text"
-            id="text"
-            rows="10"
-            cols="80"
-            v-model="messages.text"
-            placeholder=""
-          ></textarea>
-        </div>
-        <div class="button">
-          <button v-on:click="sendPost()" class="submit">投稿</button>
+          <div class="bottom">
+            <div><span>※</span>本文</div>
+            <textarea
+              name="kanso"
+              class="text"
+              id="text"
+              rows="10"
+              cols="80"
+              v-model="messages.text"
+              placeholder=""
+            ></textarea>
+          </div>
+          <div class="button">
+            <button v-on:click="sendPost()" class="submit">投稿</button>
+          </div>
         </div>
       </div>
     </div>
@@ -104,7 +124,7 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${post.date + post.title + post.emotion}`)
+          .doc(`${this.messages.date} + ${this.messages.title} `)
           .set(post)
         location.reload()
       }
