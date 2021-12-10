@@ -8,12 +8,66 @@
             class="date"
             name="date"
             size="15"
-            v-model="messages.date"
+            v-model="date"
             placeholder=""
             id="date"
           />
           <div>
-            <emotionSelect v-on:emoselect="selectEmotion" />
+            <div class="emotions">
+              <div class="emoTop">
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="happy"
+                  id="emotionHappy"
+                  v-model="emotion"
+                  placeholder=""
+                  checked
+                /><label for="emotionHappy" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="asease"
+                  id="emotionAsease"
+                  v-model="emotion"
+                  placeholder=""
+                /><label for="emotionAsease" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="cry"
+                  id="emotionCry"
+                  v-model="emotion"
+                  placeholder=""
+                /><label for="emotionCry" />
+              </div>
+              <div class="emoBottom">
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="wink"
+                  id="emotionWink"
+                  v-model="emotion"
+                  placeholder=""
+                /><label for="emotionWink" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="atyaa"
+                  id="emotionAtyaa"
+                  v-model="emotion"
+                  placeholder=""
+                /><label for="emotionAtyaa" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="angry"
+                  id="emotionAngry"
+                  v-model="emotion"
+                  placeholder=""
+                /><label for="emotionAngry" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="middle">
@@ -23,7 +77,7 @@
             id="title"
             name="title"
             size="40"
-            v-model="messages.title"
+            v-model="title"
             placeholder=""
           />
           <!-- <label class="namae">ニックネーム</label><br /><input
@@ -45,7 +99,20 @@
             placeholder=""
           />
         </div> -->
-
+          <!-- <input
+            type="file"
+            multiple
+            id="image"
+            accept=".jpg, .jpeg, .png, .svg, .gif"
+            @change="uploadImage"
+          /> -->
+          <!-- <v-file-input
+            small-chips
+            label="プロフィール画像"
+            ref="fileInput"
+            v-model="hoge"
+            @change="changeMethod"
+          /> -->
           <!-- <div>
           <label>画像アップロード</label><br />
           <input
@@ -56,6 +123,12 @@
             @change="addFile"
           />
         </div> -->
+          <input
+            type="file"
+            id="avatar_name"
+            accept="image/jpeg, image/png"
+            @change="onImageChange"
+          />
           <div class="bottom">
             <div><span>※</span>本文</div>
             <textarea
@@ -64,12 +137,12 @@
               id="text"
               rows="10"
               cols="80"
-              v-model="messages.text"
+              v-model="text"
               placeholder=""
             ></textarea>
           </div>
           <div class="button">
-            <button v-on:click="sendPost()" class="submit">投稿</button>
+            <button v-on:click="addMessage" class="submit">投稿</button>
           </div>
         </div>
       </div>
@@ -79,21 +152,26 @@
 
 <script>
 import firebase from "firebase"
-import emotionSelect from "@/views/components/emotionSelect/emotionSelect"
+// import emotionSelect from "@/views/components/emotionSelect/emotionSelect"
 
 export const storage = firebase.storage()
 export default {
-  components: {
-    emotionSelect,
-  },
+  // components: {
+  //   emotionSelect,
+  // },
   data() {
     return {
-      messages: {
-        date: "",
-        title: "",
-        emotion: "",
-        text: "",
-      },
+      // messages: {
+      //   date: "",
+      //   title: "",
+      //   emotion: "",
+      //   text: "",
+      // },
+      date: "",
+      title: "",
+      emotion: "",
+      text: "",
+      author: firebase.auth().currentUser.uid,
     }
   },
   methods: {
@@ -102,32 +180,73 @@ export default {
     //   let files = e.target.files
     //   this.messages.photo = files[0]
     // },
-    selectEmotion(emo) {
-      this.messages.emotion = emo
-    },
-    sendPost() {
-      //   let storageRef = firebase
-      //     .storage()
-      //     .ref()
-      //     .child("tmp/" + this.messages.photo.name)
-      //   storageRef.put(this.messages.photo)
-      const post = {
-        date: this.messages.date,
-        title: this.messages.title,
-        emotion: this.messages.emotion,
-        text: this.messages.text,
-        // photo: this.messages.photo,
-      }
-      if (this.messages.text === "") {
+    addMessage() {
+      if (this.text === "") {
         alert("本文を投稿してください")
-      } else {
-        firebase
-          .firestore()
-          .collection("messages")
-          .doc(`${this.messages.date} + ${this.messages.title} `)
-          .set(post)
-        location.reload()
+        return
       }
+      firebase
+        .firestore()
+        .collection("messages")
+        .doc(`${this.date}${this.emotion}${this.title}${this.author}`)
+        .set({
+          date: this.date,
+          emotion: this.emotion,
+          title: this.title,
+          text: this.text,
+          author: firebase.auth().currentUser.uid,
+        })
+      this.date = ""
+      this.emotion = ""
+      this.title = ""
+      this.text = ""
+      //   const message = {
+      //     date: this.date,
+      //     emotion: this.emotion,
+      //     title: this.title,
+      //     text: this.text,
+      //   }
+      //   this.messages.push(message)
+      //   firebase.firestore().collection("users").add({
+      //     messages: this.messages,
+      //   })
+      //   this.date = ""
+      //   this.emotion = ""
+      //   this.title = ""
+      //   this.text = ""
+      // },
+      // selectEmotion(emo) {
+      //   this.emotion = emo
+      // }
+      // firebase.firestore.collection("messages").add({
+      //   date: (this.date = ""),
+      //   emotion: (this.emotion = ""),
+      //   title: (this.title = ""),
+      //   text: (this.text = ""),
+      // })
+      // sendPost() {
+      //   //   let storageRef = firebase
+      //   //     .storage()
+      //   //     .ref()
+      //   //     .child("tmp/" + this.messages.photo.name)
+      //   //   storageRef.put(this.messages.photo)
+      //   const post = {
+      // this.date = ""
+      // this.emotion = ""
+      // this.title = ""
+      // this.text = ""
+      //     // photo: this.messages.photo,
+      //   }
+      //   if (this.messages.text === "") {
+      //     alert("本文を投稿してください")
+      //   } else {
+      //     firebase
+      //       .firestore()
+      //       .collection("messages")
+      //       .doc(`${this.messages.date} + ${this.messages.title} `)
+      //       .set(post)
+      //     location.reload()
+      //   }
       //   firebase
       //     .firestore()
       //     .collestion("messages")
@@ -147,12 +266,13 @@ export default {
     //   title.placeholder = this.editpage.message.title
     //   text.placeholder = this.editpage.message.text
     // },
+    // },
+    // mounted: function () {
+    //   if (this.editpage) {
+    //     this.place()
+    //   }
+    // },
   },
-  // mounted: function () {
-  //   if (this.editpage) {
-  //     this.place()
-  //   }
-  // },
 }
 </script>
 

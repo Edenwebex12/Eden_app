@@ -13,7 +13,61 @@
             id="date"
           />
           <div>
-            <emotionSelect2 :emo="messages.emotion" />
+            <div class="emotions">
+              <div class="emoTop">
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="happy"
+                  id="emotionHappy"
+                  v-model="messages.emotion"
+                  placeholder=""
+                  checked
+                /><label for="emotionHappy" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="asease"
+                  id="emotionAsease"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionAsease" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="cry"
+                  id="emotionCry"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionCry" />
+              </div>
+              <div class="emoBottom">
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="wink"
+                  id="emotionWink"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionWink" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="atyaa"
+                  id="emotionAtyaa"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionAtyaa" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="angry"
+                  id="emotionAngry"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionAngry" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="middle">
@@ -59,14 +113,14 @@
 
 <script>
 import firebase from "firebase"
-import emotionSelect2 from "@/views/components/emotionSelect/emotionSelect"
+// import emotionSelect2 from "@/views/components/emotionSelect/emotionSelect"
 
 export const storage = firebase.storage()
 export default {
   props: ["message"],
-  components: {
-    emotionSelect2,
-  },
+  // components: {
+  //   emotionSelect2,
+  // },
   data() {
     return {
       messages: {
@@ -102,7 +156,7 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${post.date} + ${post.title}`)
+          .doc(`${post.date}${post.emotion}${post.title}${post.author}`)
           .update(this.messages)
         location.reload()
       }
@@ -132,9 +186,9 @@ export default {
   //     this.place()
   //   }
   // },
-  created() {
-    console.log(this.message.text)
-  },
+  // created() {
+  //   getMotoData()
+  // },
 }
 </script>
 

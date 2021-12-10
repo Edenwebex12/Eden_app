@@ -23,7 +23,26 @@
               <div class="date">{{ message.date }}</div>
               <div class="postTitle">{{ message.title }}</div>
               <!-- <div class="name">{{ message.name }}</div> -->
-              <emotion :emo="message.emotion" />
+              <div class="emotion">
+                <div v-if="emochan(message.emotion) === 1">
+                  <img src="@/views/components/images/Happy.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 2">
+                  <img src="@/views/components/images/Asease.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 3">
+                  <img src="@/views/components/images/Cry.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 4">
+                  <img src="@/views/components/images/Wink.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 5">
+                  <img src="@/views/components/images/Atyaa.png" />
+                </div>
+                <div v-else-if="emochan(message.emotion) === 6">
+                  <img src="@/views/components/images/Angry.png" />
+                </div>
+              </div>
             </div>
             <div class="messageText">{{ message.text }}</div>
             <!-- <div>{{ message.photo }}</div> -->
@@ -32,7 +51,7 @@
                 :to="{
                   name: 'Edit',
                   params: {
-                    id: `${message.date} + ${message.title} `,
+                    id: `${message.date}${message.emotion}${message.title}${message.author}`,
                   },
                 }"
                 class="editButton"
@@ -51,7 +70,7 @@
 
 <script>
 import NavBar from "@/views/components/NavBar.vue"
-import emotion from "@/views/components/emotion.vue"
+// import emotion from "@/views/components/emotion.vue"
 import firebase from "firebase"
 // import database from "@/views/components/database.vue"
 
@@ -59,39 +78,92 @@ export default {
   name: "Top",
   components: {
     NavBar,
-    emotion,
+    // emotion,
     // database,
   },
   data() {
     return {
-      messages: [],
-      emo: "",
-      user: {
-        id: "",
-        email: "",
-        name: "",
-        sex: "",
-      },
+      messages: {},
+      date: "",
+      emotion: "",
+      title: "",
+      text: "",
+      author: "",
+      // emo: "",
+      // user: {
+      //   id: "",
+      //   email: "",
+      //   name: "",
+      //   sex: "",
+      // },
     }
   },
   methods: {
-    toHome() {
-      this.$router.push("/Mypage")
+    emochan(emotion) {
+      if (emotion === "happy") {
+        return 1
+      } else if (emotion === "asease") {
+        return 2
+      } else if (emotion === "cry") {
+        return 3
+      } else if (emotion === "wink") {
+        return 4
+      } else if (emotion === "atyaa") {
+        return 5
+      } else if (emotion === "angry") {
+        return 6
+      } else {
+        return 0
+      }
     },
-    getHello() {
-      firebase
-        .firestore()
-        .collection("messages")
-        .where("text", "==", "こんにちは、メッセージの本文です。")
-        .orderBy("date", "desc")
-        .limit(1)
-        .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            console.log(doc.id, "=>", doc.data())
-          })
-        })
-    },
+    // addDiary() {
+    //   if (
+    //     this.date !== "" &&
+    //     this.emotion !== "" &&
+    //     this.title !== "" &&
+    //     this.text !== ""
+    //   ) {
+    //     let Date = { item: this.date }
+    //     let Emotion = { item: this.emotion }
+    //     let Title = { item: this.title }
+    //     let Text = { item: this.text }
+    //     this.messages.push({
+    //       dates: Date.item,
+    //       emotions: Emotion.item,
+    //       titles: Title.item,
+    //       texts: Text.item,
+    //     })
+    //     firebase
+    //       .firestore()
+    //       .collection("users")
+    //       .add(
+    //         {
+    //           messages: this.messages,
+    //         },
+    //         (this.date = ""),
+    //         (this.emotion = ""),
+    //         (this.title = ""),
+    //         (this.text = "")
+    //       )
+    //   }
+    // },
+    // toHome() {
+    //   this.$router.push("/Mypage")
+    // },
+    // getHello() {
+    //   firebase
+    //     .firestore()
+    //     .collection("messages")
+    //     .where("text", "==", "こんにちは、メッセージの本文です。")
+    //     .orderBy("date", "desc")
+    //     .limit(1)
+    //     .get()
+    //     .then((snapshot) => {
+    //       snapshot.forEach((doc) => {
+    //         console.log(doc.id, "=>", doc.data())
+    //       })
+    //     })
+    // },
     keikoku(message) {
       const res = window.confirm(
         `${message.date}の投稿を削除します。よろしいですか？`
@@ -100,49 +172,80 @@ export default {
         firebase
           .firestore()
           .collection("messages")
-          .doc(`${message.date} + ${message.title} `)
+          .doc(
+            `${message.date}${message.emotion}${message.title}${message.author}`
+          )
           .delete()
-        location.reload()
       }
     },
-    mypost() {
-      firebase
-        .firestore()
-        .collection("messages")
-        .where(this.name === this.message.name)
-        .orderBy("date", "desc")
-        .get()
-        .then((snapshot) => {
-          for (let i = 0; i < snapshot.docs.length; i++) {
-            this.messages.push(snapshot.docs[i].data())
-          }
-        })
-    },
+    // mypost() {
+    //   firebase
+    //     .firestore()
+    //     .collection("messages")
+    //     .where(this.name === this.message.name)
+    //     .orderBy("date", "desc")
+    //     .get()
+    //     .then((snapshot) => {
+    //       for (let i = 0; i < snapshot.docs.length; i++) {
+    //         this.messages.push(snapshot.docs[i].data())
+    //       }
+    //     })
+    // },
   },
   created() {
+    console.log(firebase.auth().currentUser.uid)
+    // firebase
+    //   .firestore()
+    //   // .doc(`users/${user.uid}`)
+    //   .collection("messages")
+    //   .orderBy("date", "desc")
+    //   .get()
+    //   .then((snapshot) => {
+    //     for (let i = 0; i < snapshot.docs.length; i++) {
+    //       this.messages.push(snapshot.docs[i].data())
+    //     }
+    //   })
+    // firebase
+    //   .firestore()
+    //   // .doc(`users/${user.uid}`)
+    //   .collection("users")
+    //   .orderBy("messages.date", "desc")
+    //   .get()
+    //   .then((snapshot) => {
+    //     for (let i = 0; i < snapshot.docs.length; i++) {
+    //       this.users.push(snapshot.docs[i].data())
+    //     }
+    //   })
+    // this.database = firebase.database()
+    // this.uid = firebase.auth().currentUser.uid
+    // this.messagesRef = this.database.ref("messages/" + this.uid)
     firebase
       .firestore()
-      // .doc(`users/${user.uid}`)
       .collection("messages")
+      .where("author", "==", `${firebase.auth().currentUser.uid}`)
       .orderBy("date", "desc")
-      .get()
-      .then((snapshot) => {
-        for (let i = 0; i < snapshot.docs.length; i++) {
-          this.messages.push(snapshot.docs[i].data())
-        }
+      .onSnapshot((querySnapshot) => {
+        const obj = {}
+        querySnapshot.forEach((doc) => {
+          obj[doc.id] = doc.data()
+        })
+        this.messages = obj
       })
-    const uid = firebase.auth().currentUser.uid
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(uid)
-      .get()
-      .then((doc) => {
-        this.user.id = doc.data().id
-        this.user.email = doc.data().email
-        this.user.name = doc.data().name
-        this.user.sex = doc.data().sex
-      })
+    // this.messagesRef.on("value", (snapshot) => {
+    //   this.messages = snapshot.val()
+    // })
+
+    // firebase
+    //   .firestore()
+    //   .collection("users")
+    //   .doc(this.uid)
+    //   .get()
+    //   .then((doc) => {
+    //     this.user.id = doc.data().id
+    //     this.user.email = doc.data().email
+    //     this.user.name = doc.data().name
+    //     this.user.sex = doc.data().sex
+    //   })
   },
 }
 </script>
