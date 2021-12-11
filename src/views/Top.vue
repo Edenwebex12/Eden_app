@@ -346,10 +346,13 @@ export default {
   justify-content: flex-end;
   padding-right: 8%;
   padding-bottom: 2%;
-  color: #b1221a;
 }
 .editButton {
   padding-right: 5%;
+  color: #b1221a;
+}
+.deleteButton {
+  color: #b1221a;
 }
 .main {
   display: flex;
