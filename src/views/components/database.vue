@@ -80,54 +80,12 @@
             v-model="title"
             placeholder=""
           />
-          <!-- <label class="namae">ニックネーム</label><br /><input
-            type="text"
-            class="name"
-            id="name"
-            name="name"
-            size="40"
-            v-model="messages.name"
-            placeholder=""
-          />
-          <label class="password">パスワード</label><br /><input
-            type="password"
-            class="pass"
-            id="pass"
-            name="pass"
-            size="40"
-            v-model="messages.pass"
-            placeholder=""
-          />
-        </div> -->
-          <!-- <input
-            type="file"
-            multiple
-            id="image"
-            accept=".jpg, .jpeg, .png, .svg, .gif"
-            @change="uploadImage"
-          /> -->
-          <!-- <v-file-input
-            small-chips
-            label="プロフィール画像"
-            ref="fileInput"
-            v-model="hoge"
-            @change="changeMethod"
-          /> -->
-          <!-- <div>
-          <label>画像アップロード</label><br />
           <input
+            class="file"
             type="file"
-            class="add"
-            value="追加"
-            id="add"
-            @change="addFile"
-          />
-        </div> -->
-          <input
-            type="file"
-            id="avatar_name"
-            accept="image/jpeg, image/png"
-            @change="onImageChange"
+            accept="image/*"
+            :disabled="disabled"
+            @change="onFileChange"
           />
           <div class="bottom">
             <div><span>※</span>本文</div>
@@ -161,17 +119,14 @@ export default {
   // },
   data() {
     return {
-      // messages: {
-      //   date: "",
-      //   title: "",
-      //   emotion: "",
-      //   text: "",
-      // },
       date: "",
       title: "",
       emotion: "",
       text: "",
       author: firebase.auth().currentUser.uid,
+      disabled: false,
+      file: "",
+      image: "",
     }
   },
   methods: {
@@ -180,97 +135,64 @@ export default {
     //   let files = e.target.files
     //   this.messages.photo = files[0]
     // },
+    onFileChange(e) {
+      this.file = e.target.files[0]
+      this.upload(this.file)
+    },
+    upload(file) {
+      this.disabled = true
+      // ref は reference の略。データの在り処＝住所を表すイメージ。
+      const storageRef = storage.ref()
+      // 同じ名前のファイルと区別できるように timestamp を追加して、ユニークなファイル名をつける
+      const createdAt = new Date()
+      const timestamp = createdAt.getTime()
+      const uniqueFileName = timestamp + "_" + this.file.name
+      const fileRef = storageRef.child("images/" + uniqueFileName)
+      // fileRef の場所に file を送る。 put は "置き換える" の意味。
+      // uploadTask.on("state_changed", ...) を使う方法もあるが、ひとまず then で実装する
+      fileRef
+        .put(file)
+        .then(() => fileRef.getDownloadURL())
+        // 上の then のなかで snapshot.getDownloadURL().then(...) と書いてもいいが、
+        // then で続けられるやつを return すると、外側に then を続けることができ、よみやすい
+        // 例 fetch(...).then(res => res.json()).then(...)
+        .then((url) => {
+          // storage にアップロードしたファイルに対応するドキュメントを保存する
+          this.image = {
+            name: file.name,
+            url,
+            createdAt,
+          }
+          return firebase.firestore().collection("images").add(this.image)
+        })
+        .then(() => {
+          this.comment = "アップロード完了！"
+          setTimeout(() => {
+            this.disabled = false
+          }, 1000)
+        })
+    },
     addMessage() {
       if (this.text === "") {
         alert("本文を投稿してください")
         return
       }
-      firebase
-        .firestore()
-        .collection("messages")
-        .doc(`${this.date}${this.emotion}${this.title}${this.author}`)
-        .set({
-          date: this.date,
-          emotion: this.emotion,
-          title: this.title,
-          text: this.text,
-          author: firebase.auth().currentUser.uid,
-        })
+      firebase.firestore().collection("messages").add({
+        date: this.date,
+        emotion: this.emotion,
+        title: this.title,
+        text: this.text,
+        author: firebase.auth().currentUser.uid,
+        image: this.image,
+      })
       this.date = ""
       this.emotion = ""
       this.title = ""
       this.text = ""
-      //   const message = {
-      //     date: this.date,
-      //     emotion: this.emotion,
-      //     title: this.title,
-      //     text: this.text,
-      //   }
-      //   this.messages.push(message)
-      //   firebase.firestore().collection("users").add({
-      //     messages: this.messages,
-      //   })
-      //   this.date = ""
-      //   this.emotion = ""
-      //   this.title = ""
-      //   this.text = ""
-      // },
-      // selectEmotion(emo) {
-      //   this.emotion = emo
-      // }
-      // firebase.firestore.collection("messages").add({
-      //   date: (this.date = ""),
-      //   emotion: (this.emotion = ""),
-      //   title: (this.title = ""),
-      //   text: (this.text = ""),
-      // })
-      // sendPost() {
-      //   //   let storageRef = firebase
-      //   //     .storage()
-      //   //     .ref()
-      //   //     .child("tmp/" + this.messages.photo.name)
-      //   //   storageRef.put(this.messages.photo)
-      //   const post = {
-      // this.date = ""
-      // this.emotion = ""
-      // this.title = ""
-      // this.text = ""
-      //     // photo: this.messages.photo,
-      //   }
-      //   if (this.messages.text === "") {
-      //     alert("本文を投稿してください")
-      //   } else {
-      //     firebase
-      //       .firestore()
-      //       .collection("messages")
-      //       .doc(`${this.messages.date} + ${this.messages.title} `)
-      //       .set(post)
-      //     location.reload()
-      //   }
-      //   firebase
-      //     .firestore()
-      //     .collestion("messages")
-      //     .add(post)
-      //     .then((ref) => {
-      //       this.messages.push({
-      //         id: ref.id,
-      //         ...post,
-      //       })
-      //     })
+      this.image = ""
     },
-    // place() {
-    //   const date = document.getElementById("date")
-    //   const title = document.getElementById("title")
-    //   const text = document.getElementById("text")
-    //   date.placeholder = this.editpage.message.date
-    //   title.placeholder = this.editpage.message.title
-    //   text.placeholder = this.editpage.message.text
-    // },
-    // },
-    // mounted: function () {
-    //   if (this.editpage) {
-    //     this.place()
-    //   }
+    // uploadImage(file, ID) {
+    //   const URL = `eden-firebase.appspot.com/${ID}`
     // },
   },
 }
@@ -352,5 +274,9 @@ span {
   width: 10%;
   background-color: whitesmoke;
   border: outset;
+}
+
+.file {
+  padding-left: 5%;
 }
 </style>

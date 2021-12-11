@@ -1,10 +1,12 @@
 <template>
   <div id="top">
-    <div class="pagetitle"><h2>My Diary</h2></div>
-    <div><NavBar /></div>
-    <router-link to="/Form" class="plus"
-      ><img src="./components/images/プラスボタン.png"
-    /></router-link>
+    <div clsss="header">
+      <div class="pagetitle"><h2>My Diary</h2></div>
+      <div><NavBar /></div>
+      <router-link to="/Form" class="plus"
+        ><img src="./components/images/プラスボタン.png"
+      /></router-link>
+    </div>
     <div>
       <ul>
         <div
@@ -44,22 +46,37 @@
                 </div>
               </div>
             </div>
-            <div class="messageText">{{ message.text }}</div>
-            <!-- <div>{{ message.photo }}</div> -->
-            <div class="message-buttons">
-              <router-link
-                :to="{
-                  name: 'Edit',
-                  params: {
-                    id: `${message.date}${message.emotion}${message.title}${message.author}`,
-                  },
-                }"
-                class="editButton"
-                >編集</router-link
-              >
-              <a href="#" v-on:click="keikoku(message)" class="deleteButton"
-                >削除</a
-              >
+            <div class="main">
+              <div class="left">
+                <div class="messageText">{{ message.text }}</div>
+              </div>
+              <div class="right">
+                <div class="image">
+                  <div v-if="message.image">
+                    <img
+                      v-bind:src="message.image.url"
+                      style="max-width: 100%; max-height: 90%"
+                    />
+                  </div>
+                  <div v-else><img src="@/assets/No Image.png" /></div>
+                </div>
+                <!-- <div>{{ message.photo }}</div> -->
+                <div class="message-buttons">
+                  <router-link
+                    :to="{
+                      name: 'Edit',
+                      params: {
+                        id: message.id,
+                      },
+                    }"
+                    class="editButton"
+                    >編集</router-link
+                  >
+                  <a href="#" v-on:click="keikoku(message)" class="deleteButton"
+                    >削除</a
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -83,12 +100,15 @@ export default {
   },
   data() {
     return {
-      messages: {},
+      messages: [],
       date: "",
       emotion: "",
       title: "",
       text: "",
       author: "",
+      id: "",
+      image: "",
+      url: "",
       // emo: "",
       // user: {
       //   id: "",
@@ -169,13 +189,8 @@ export default {
         `${message.date}の投稿を削除します。よろしいですか？`
       )
       if (res) {
-        firebase
-          .firestore()
-          .collection("messages")
-          .doc(
-            `${message.date}${message.emotion}${message.title}${message.author}`
-          )
-          .delete()
+        firebase.firestore().collection("messages").doc(message.id).delete()
+        location.reload()
       }
     },
     // mypost() {
@@ -194,6 +209,7 @@ export default {
   },
   created() {
     console.log(firebase.auth().currentUser.uid)
+
     // firebase
     //   .firestore()
     //   // .doc(`users/${user.uid}`)
@@ -225,11 +241,16 @@ export default {
       .where("author", "==", `${firebase.auth().currentUser.uid}`)
       .orderBy("date", "desc")
       .onSnapshot((querySnapshot) => {
-        const obj = {}
+        // const obj = {}
         querySnapshot.forEach((doc) => {
-          obj[doc.id] = doc.data()
+          // obj[doc.id] = doc.data()
+          // this.id = doc.id
+          this.messages.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
-        this.messages = obj
+        console.log(this.messages[0].image)
       })
     // this.messagesRef.on("value", (snapshot) => {
     //   this.messages = snapshot.val()
@@ -329,5 +350,33 @@ export default {
 }
 .editButton {
   padding-right: 5%;
+}
+.main {
+  display: flex;
+}
+.left {
+  width: 70%;
+}
+.right {
+  max-width: 30%;
+  padding-right: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.message-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.header {
+  border: 1px solid;
+  /* 表示位置を固定 */
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  /* 表示順序 他のコンテンツが重ならないようにする */
+  z-index: 9999;
+  background-color: #ffffff;
 }
 </style>
