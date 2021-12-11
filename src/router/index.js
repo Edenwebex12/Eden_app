@@ -43,6 +43,7 @@ const routes = [
     path: "/Edit/:id",
     name: "Edit",
     component: Edit,
+    props: true,
     // meta: { requiresAuth: true },
   },
   { path: "/", name: "PreLogin", component: PreLogin },

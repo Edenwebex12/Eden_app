@@ -1,10 +1,10 @@
 <template>
   <div id="NavBar">
     <ul class="contents">
-      <li class="content"><router-link to="/">TOP</router-link></li>
+      <li class="content"><router-link to="/Mypage">TOP</router-link></li>
       <li class="content"><router-link to="/Form">POST</router-link></li>
       <li class="content">
-        <button id="Logout" v-on:click="Logout">ログアウト</button>
+        <router-link to="/" id="Logout" v-on:click="Logout">LOGOUT</router-link>
       </li>
     </ul>
   </div>
@@ -75,5 +75,8 @@ export default {
   padding-right: 40%;
   color: white;
   font-family: "Bahnschrift SemiLight";
+}
+#Logout {
+  box-sizing: 20%;
 }
 </style>
