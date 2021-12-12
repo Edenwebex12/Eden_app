@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img src="#" />
+    <img id="logo" src="../assets/diaryロゴ.jpg" />
     <h2>今日の気持ちや思い出を残そう！</h2>
     <h1>えもDairy</h1>
     <button id="in_button" v-on:click="Login">はじめる</button>
@@ -62,14 +62,19 @@ export default {
 </script>
 <style>
 h2 {
-  font-size: 18px;
-  margin-bottom: -40px;
+  font-size: 15px;
+  margin-bottom: -30px;
   color: #525252;
 }
 h1 {
-  font-size: 44px;
+  font-size: 40px;
   color: #525252;
 }
+
+#logo {
+  height: 180px;
+}
+
 .login {
   text-align: center;
   font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
