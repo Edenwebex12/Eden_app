@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <img id="logo" src="../assets/diaryロゴ.jpg" />
-    <h2>今日の気持ちや思い出を残そう！</h2>
-    <h1>えもDairy</h1>
+    <div class="log_h2">今日の気持ちや思い出を残そう！</div>
+    <div class="log_h1">えもDairy</div>
     <button id="in_button" v-on:click="Login">はじめる</button>
   </div>
 </template>
@@ -61,14 +61,16 @@ export default {
 }
 </script>
 <style>
-h2 {
+.log_h2 {
   font-size: 15px;
-  margin-bottom: -30px;
   color: #525252;
+  margin-top: 10px;
 }
-h1 {
+.log_h1 {
   font-size: 40px;
   color: #525252;
+  font-weight: bold;
+  margin-top: -8px;
 }
 
 #logo {
@@ -85,5 +87,6 @@ h1 {
   font-size: 12px;
   border: none;
   border-bottom: 2px solid #cfcfcf;
+  margin-top: 30px;
 }
 </style>
