@@ -87,21 +87,21 @@
             :disabled="disabled"
             @change="onFileChange"
           />
-          <div class="bottom">
-            <div><span>※</span>本文</div>
-            <textarea
-              name="kanso"
-              class="text"
-              id="text"
-              rows="10"
-              cols="80"
-              v-model="text"
-              placeholder=""
-            ></textarea>
-          </div>
-          <div class="button">
-            <button v-on:click="addMessage" class="submit">投稿</button>
-          </div>
+        </div>
+        <div class="bottom">
+          <div><span>※</span>本文</div>
+          <textarea
+            name="kanso"
+            class="text"
+            id="text"
+            rows="10"
+            cols="80"
+            v-model="text"
+            placeholder=""
+          ></textarea>
+        </div>
+        <div class="button">
+          <button v-on:click="addMessage" class="submit">投稿</button>
         </div>
       </div>
     </div>
@@ -190,6 +190,7 @@ export default {
       this.title = ""
       this.text = ""
       this.image = ""
+      window.location.href = "/Mypage"
     },
     // uploadImage(file, ID) {
     //   const URL = `eden-firebase.appspot.com/${ID}`
@@ -278,5 +279,10 @@ span {
 
 .file {
   padding-left: 5%;
+}
+
+.middle {
+  display: flex;
+  padding: 0;
 }
 </style>

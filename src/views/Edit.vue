@@ -209,7 +209,7 @@ export default {
           .collection("messages")
           .doc(this.id)
           .update(this.messages)
-        location.reload()
+        window.location.href = "/Mypage"
       }
     },
   },
