@@ -105,10 +105,10 @@
           ></textarea>
         </div>
       </div>
-    </div>
-    <div class="moreBottom">
-      <div class="button">
-        <button v-on:click="addMessage" class="submit">投稿</button>
+      <div class="moreBottom">
+        <div class="button">
+          <button v-on:click="addMessage" class="submit">投稿</button>
+        </div>
       </div>
     </div>
   </div>
@@ -244,22 +244,22 @@ input[type="radio"][value="angry"] + label:before {
 .form {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .up {
   display: flex;
   flex-direction: row;
-  width: 40%;
+  width: 60%;
 }
 .date {
   height: 10%;
-  width: 75%;
-  margin-left: 7.5%;
+  width: 100%;
+  margin-left: 12.5%;
 }
 .emotions {
-  height: 10%;
-  width: 90%;
+  height: 5%;
+  width: 100%;
   margin-left: 25%;
 }
 .PageTitle {
@@ -301,7 +301,7 @@ span {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-left: 32.5%;
+  margin-left: 33%;
 }
 .button {
   width: 100%;

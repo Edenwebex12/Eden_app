@@ -2,9 +2,9 @@
   <div class="forms">
     <div class="pagetitle"><h2>投稿フォーム</h2></div>
     <div><NavBar /></div>
-    <div class="forms">
-      <div class="form">
-        <div class="box">
+    <div class="form">
+      <div class="forms">
+        <div class="form">
           <div class="up">
             <input
               type="date"
@@ -12,97 +12,105 @@
               name="date"
               size="15"
               v-model="messages.date"
-              placeholder="message.date"
+              placeholder=""
               id="date"
             />
-            <div>
-              <div class="emotions">
-                <div class="emoTop">
-                  <input
-                    type="radio"
-                    name="emotionSelect"
-                    value="happy"
-                    id="emotionHappy"
-                    v-model="messages.emotion"
-                    placeholder=""
-                    checked
-                  /><label for="emotionHappy" />
-                  <input
-                    type="radio"
-                    name="emotionSelect"
-                    value="asease"
-                    id="emotionAsease"
-                    v-model="messages.emotion"
-                    placeholder=""
-                  /><label for="emotionAsease" />
-                  <input
-                    type="radio"
-                    name="emotionSelect"
-                    value="cry"
-                    id="emotionCry"
-                    v-model="messages.emotion"
-                    placeholder=""
-                  /><label for="emotionCry" />
-                </div>
-                <div class="emoBottom">
-                  <input
-                    type="radio"
-                    name="emotionSelect"
-                    value="wink"
-                    id="emotionWink"
-                    v-model="messages.emotion"
-                    placeholder=""
-                  /><label for="emotionWink" />
-                  <input
-                    type="radio"
-                    name="emotionSelect"
-                    value="atyaa"
-                    id="emotionAtyaa"
-                    v-model="messages.emotion"
-                    placeholder=""
-                  /><label for="emotionAtyaa" />
-                  <input
-                    type="radio"
-                    name="emotionSelect"
-                    value="angry"
-                    id="emotionAngry"
-                    v-model="messages.emotion"
-                    placeholder=""
-                  /><label for="emotionAngry" />
-                </div>
+            <div class="emotions">
+              <div class="emoTop">
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="happy"
+                  id="emotionHappy"
+                  v-model="messages.emotion"
+                  placeholder=""
+                  checked
+                /><label for="emotionHappy" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="asease"
+                  id="emotionAsease"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionAsease" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="cry"
+                  id="emotionCry"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionCry" />
+              </div>
+              <div class="emoBottom">
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="wink"
+                  id="emotionWink"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionWink" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="atyaa"
+                  id="emotionAtyaa"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionAtyaa" />
+                <input
+                  type="radio"
+                  name="emotionSelect"
+                  value="angry"
+                  id="emotionAngry"
+                  v-model="messages.emotion"
+                  placeholder=""
+                /><label for="emotionAngry" />
               </div>
             </div>
           </div>
           <div class="middle">
-            <label class="daimei">題名</label><br /><input
-              type="text"
-              class="title"
-              id="title"
-              name="title"
-              size="40"
-              v-model="messages.title"
-              placeholder="message.title"
-            />
+            <div class="PageTitle">
+              <div class="daimei">題名</div>
+              <input
+                type="text"
+                class="title"
+                id="title"
+                name="title"
+                size="40"
+                v-model="messages.title"
+                placeholder=""
+              />
+            </div>
+            <div class="fileUp">
+              <div class="imageUpload">画像アップロード</div>
+              <input
+                class="file"
+                type="file"
+                accept="image/*"
+                :disabled="disabled"
+                @change="onFileChange"
+              />
+            </div>
           </div>
-          <input
-            class="file"
-            type="file"
-            accept="image/*"
-            :disabled="disabled"
-            @change="onFileChange"
-          />
           <div class="bottom">
-            <div><span>※</span>本文</div>
-            <textarea
-              name="kanso"
-              class="text"
-              id="text"
-              rows="10"
-              cols="80"
-              v-model="messages.text"
-              value="message.text"
-            ></textarea>
+            <div class="hissukoumoku">
+              <div class="honbun">※本文</div>
+              <textarea
+                name="kanso"
+                class="text"
+                id="text"
+                rows="10"
+                cols="80"
+                v-model="messages.text"
+                placeholder=""
+              ></textarea>
+            </div>
           </div>
+        </div>
+        <div class="moreBottom">
           <div class="button">
             <button v-on:click="editPost" class="submit">編集</button>
           </div>
@@ -237,14 +245,9 @@ export default {
 .pagetitle {
   margin-left: 5%;
 }
-.form {
+.All {
   display: flex;
   align-items: center;
-  margin-top: 3%;
-}
-
-.file {
-  padding-left: 5%;
 }
 
 input[type="radio"] + label:before {
@@ -279,32 +282,40 @@ input[type="radio"][value="angry"] + label:before {
   background-repeat: no-repeat;
 }
 
-.forms {
-  width: 100%;
+.daimei {
+  padding-right: 3rem;
 }
+
 .form {
   display: flex;
   flex-direction: column;
-  box-sizing: 50%;
-  margin-top: 5%;
+  justify-content: center;
+  margin-left: 10%;
 }
 
 .up {
   display: flex;
   flex-direction: row;
-  padding-top: 3%;
+  width: 60%;
+  margin-top: 5%;
+  margin-left: 8%;
 }
 .date {
   height: 10%;
-  margin-right: 5%;
+  width: 50%;
+  margin-left: 10%;
 }
 .emotions {
-  height: 10%;
+  height: 5%;
   width: 100%;
+  margin-left: 10%;
 }
-
-.title {
-  margin-bottom: 5%;
+.PageTitle {
+  margin-left: 20%;
+  width: 70%;
+}
+.fileUp {
+  margin-left: 10%;
 }
 
 span {
@@ -321,12 +332,36 @@ span {
   border: outset;
 }
 
-.bottom {
-  padding-top: 2%;
+.middle {
+  display: flex;
+  padding: 0;
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-bottom: 4%;
+  width: 40%;
 }
 
-.box {
+.hissukoumoku {
+  margin-left: 5%;
+}
+
+.honbun {
+  margin-left: 8%;
+}
+.text {
+  resize: none;
+  width: 70%;
+  height: 60%;
+  margin-left: 8%;
+}
+
+.moreBottom {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 21%;
+}
+
+.button {
+  width: 100%;
 }
 </style>

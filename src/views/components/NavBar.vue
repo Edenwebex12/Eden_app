@@ -79,11 +79,4 @@ export default {
 #Logout {
   box-sizing: 20%;
 }
-a {
-  text-decoration: none;
-}
-
-.contents a:visited {
-  color: #ffffff;
-}
 </style>
