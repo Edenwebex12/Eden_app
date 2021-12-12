@@ -43,6 +43,5 @@ export default {
 .form {
   display: flex;
   align-items: center;
-  margin-top: 3%;
 }
 </style>

@@ -1,77 +1,76 @@
 <template>
   <div class="forms">
     <div class="form">
-      <div class="box">
-        <div class="up">
-          <input
-            type="date"
-            class="date"
-            name="date"
-            size="15"
-            v-model="date"
-            placeholder=""
-            id="date"
-          />
-          <div>
-            <div class="emotions">
-              <div class="emoTop">
-                <input
-                  type="radio"
-                  name="emotionSelect"
-                  value="happy"
-                  id="emotionHappy"
-                  v-model="emotion"
-                  placeholder=""
-                  checked
-                /><label for="emotionHappy" />
-                <input
-                  type="radio"
-                  name="emotionSelect"
-                  value="asease"
-                  id="emotionAsease"
-                  v-model="emotion"
-                  placeholder=""
-                /><label for="emotionAsease" />
-                <input
-                  type="radio"
-                  name="emotionSelect"
-                  value="cry"
-                  id="emotionCry"
-                  v-model="emotion"
-                  placeholder=""
-                /><label for="emotionCry" />
-              </div>
-              <div class="emoBottom">
-                <input
-                  type="radio"
-                  name="emotionSelect"
-                  value="wink"
-                  id="emotionWink"
-                  v-model="emotion"
-                  placeholder=""
-                /><label for="emotionWink" />
-                <input
-                  type="radio"
-                  name="emotionSelect"
-                  value="atyaa"
-                  id="emotionAtyaa"
-                  v-model="emotion"
-                  placeholder=""
-                /><label for="emotionAtyaa" />
-                <input
-                  type="radio"
-                  name="emotionSelect"
-                  value="angry"
-                  id="emotionAngry"
-                  v-model="emotion"
-                  placeholder=""
-                /><label for="emotionAngry" />
-              </div>
-            </div>
+      <div class="up">
+        <input
+          type="date"
+          class="date"
+          name="date"
+          size="15"
+          v-model="date"
+          placeholder=""
+          id="date"
+        />
+        <div class="emotions">
+          <div class="emoTop">
+            <input
+              type="radio"
+              name="emotionSelect"
+              value="happy"
+              id="emotionHappy"
+              v-model="emotion"
+              placeholder=""
+              checked
+            /><label for="emotionHappy" />
+            <input
+              type="radio"
+              name="emotionSelect"
+              value="asease"
+              id="emotionAsease"
+              v-model="emotion"
+              placeholder=""
+            /><label for="emotionAsease" />
+            <input
+              type="radio"
+              name="emotionSelect"
+              value="cry"
+              id="emotionCry"
+              v-model="emotion"
+              placeholder=""
+            /><label for="emotionCry" />
+          </div>
+          <div class="emoBottom">
+            <input
+              type="radio"
+              name="emotionSelect"
+              value="wink"
+              id="emotionWink"
+              v-model="emotion"
+              placeholder=""
+            /><label for="emotionWink" />
+            <input
+              type="radio"
+              name="emotionSelect"
+              value="atyaa"
+              id="emotionAtyaa"
+              v-model="emotion"
+              placeholder=""
+            /><label for="emotionAtyaa" />
+            <input
+              type="radio"
+              name="emotionSelect"
+              value="angry"
+              id="emotionAngry"
+              v-model="emotion"
+              placeholder=""
+            /><label for="emotionAngry" />
           </div>
         </div>
-        <div class="middle">
-          <label class="daimei">題名</label><br /><input
+      </div>
+      <div class="middle">
+        <div class="PageTitle">
+          <div class="daimei">題名</div>
+          <input
             type="text"
             class="title"
             id="title"
@@ -80,6 +79,9 @@
             v-model="title"
             placeholder=""
           />
+        </div>
+        <div class="fileUp">
+          <div class="imageUpload">画像アップロード</div>
           <input
             class="file"
             type="file"
@@ -88,8 +90,10 @@
             @change="onFileChange"
           />
         </div>
-        <div class="bottom">
-          <div><span>※</span>本文</div>
+      </div>
+      <div class="bottom">
+        <div class="hissukoumoku">
+          <div class="honbun">※本文</div>
           <textarea
             name="kanso"
             class="text"
@@ -100,9 +104,11 @@
             placeholder=""
           ></textarea>
         </div>
-        <div class="button">
-          <button v-on:click="addMessage" class="submit">投稿</button>
-        </div>
+      </div>
+    </div>
+    <div class="moreBottom">
+      <div class="button">
+        <button v-on:click="addMessage" class="submit">投稿</button>
       </div>
     </div>
   </div>
@@ -235,32 +241,36 @@ input[type="radio"][value="angry"] + label:before {
   padding-right: 3rem;
 }
 
-.forms {
-  width: 100%;
-}
 .form {
   display: flex;
   flex-direction: column;
-  box-sizing: 50%;
-  margin-top: 5%;
+  justify-content: flex-start;
 }
 
 .up {
   display: flex;
   flex-direction: row;
-  padding-top: 3%;
+  width: 40%;
 }
 .date {
   height: 10%;
-  margin-right: 5%;
+  width: 75%;
+  margin-left: 7.5%;
 }
 .emotions {
   height: 10%;
-  width: 100%;
+  width: 90%;
+  margin-left: 25%;
 }
-
-.title {
-  margin-bottom: 5%;
+.PageTitle {
+  margin-left: 3%;
+  width: 70%;
+}
+.fileUp {
+  margin-left: 10%;
+}
+.imageUpload {
+  margin-left: 5%;
 }
 
 span {
@@ -277,12 +287,23 @@ span {
   border: outset;
 }
 
-.file {
-  padding-left: 5%;
-}
-
 .middle {
   display: flex;
   padding: 0;
+  margin-top: 2%;
+}
+
+.hissukoumoku {
+  margin-left: 6%;
+}
+
+.moreBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 32.5%;
+}
+.button {
+  width: 100%;
 }
 </style>
