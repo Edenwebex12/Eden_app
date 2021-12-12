@@ -1,5 +1,10 @@
 <template>
-  <button id="Login" v-on:click="Login">ログイン</button>
+  <div class="login">
+    <img src="#" />
+    <h2>今日の気持ちや思い出を残そう！</h2>
+    <h1>えもDairy</h1>
+    <button id="in_button" v-on:click="Login">はじめる</button>
+  </div>
 </template>
 
 <script>
@@ -55,3 +60,25 @@ export default {
   //
 }
 </script>
+<style>
+h2 {
+  font-size: 18px;
+  margin-bottom: -40px;
+  color: #525252;
+}
+h1 {
+  font-size: 44px;
+  color: #525252;
+}
+.login {
+  text-align: center;
+  font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
+}
+#in_button {
+  height: 30px;
+  width: 90px;
+  font-size: 12px;
+  border: none;
+  border-bottom: 2px solid #cfcfcf;
+}
+</style>
