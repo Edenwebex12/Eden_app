@@ -1,5 +1,10 @@
 <template>
-  <button id="Login" v-on:click="Login">ログイン</button>
+  <div class="login">
+    <img id="logo" src="../assets/diaryロゴ.jpg" />
+    <div class="log_h2">今日の気持ちや思い出を残そう！</div>
+    <div class="log_h1">えもDairy</div>
+    <button id="in_button" v-on:click="Login">はじめる</button>
+  </div>
 </template>
 
 <script>
@@ -55,3 +60,33 @@ export default {
   //
 }
 </script>
+<style>
+.log_h2 {
+  font-size: 15px;
+  color: #525252;
+  margin-top: 10px;
+}
+.log_h1 {
+  font-size: 40px;
+  color: #525252;
+  font-weight: bold;
+  margin-top: -8px;
+}
+
+#logo {
+  height: 180px;
+}
+
+.login {
+  text-align: center;
+  font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
+}
+#in_button {
+  height: 30px;
+  width: 90px;
+  font-size: 12px;
+  border: none;
+  border-bottom: 2px solid #cfcfcf;
+  margin-top: 30px;
+}
+</style>
