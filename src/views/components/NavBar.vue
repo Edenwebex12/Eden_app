@@ -6,6 +6,11 @@
       <li class="content">
         <router-link to="/" id="Logout" v-on:click="Logout">LOGOUT</router-link>
       </li>
+      <div id="menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </ul>
   </div>
 </template>
@@ -75,8 +80,53 @@ export default {
   padding-right: 40%;
   color: white;
   font-family: "Bahnschrift SemiLight";
+  display: flex;
 }
 #Logout {
   box-sizing: 20%;
+}
+
+.menuIcon {
+  display: none;
+}
+
+@media (max-width: 670px) {
+  .menuIcon {
+    display: flex;
+  }
+  .content {
+    display: none;
+  }
+  .menu {
+    position: relative;
+    height: 90%;
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+  }
+
+  .menu div {
+    position: absolute;
+    left: 0;
+    height: 30%;
+    width: 80%;
+    color: white;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+
+  .menu div:nth-of-type(1) {
+    bottom: 10%;
+  }
+  .menu div:nth-of-type(2) {
+    bottom: 5%;
+  }
+  .menu div:nth-of-type(3) {
+    bottom: 0%;
+  }
 }
 </style>

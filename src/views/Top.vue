@@ -1,7 +1,7 @@
 <template>
   <div id="top">
     <div clsss="header">
-      <div class="pagetitle"><h2>My Diary</h2></div>
+      <div class="pagetitle"><h2>えもDiary</h2></div>
       <div><NavBar /></div>
       <router-link to="/Form" class="plus"
         ><img src="./components/images/プラスボタン.png"
@@ -381,5 +381,12 @@ export default {
   /* 表示順序 他のコンテンツが重ならないようにする */
   z-index: 9999;
   background-color: #ffffff;
+}
+
+@media (max-width: 670px) {
+  .pagetitle {
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>
