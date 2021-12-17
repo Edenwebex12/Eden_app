@@ -1,17 +1,32 @@
 <template>
   <div id="NavBar">
+    <input id="nav-input" type="checkbox" class="nav-hidden" />
+    <label id="menubtn" for="nav-input"></label>
     <ul class="contents">
       <li class="content"><router-link to="/Mypage">TOP</router-link></li>
       <li class="content"><router-link to="/Form">POST</router-link></li>
       <li class="content">
         <router-link to="/" id="Logout" v-on:click="Logout">LOGOUT</router-link>
       </li>
-      <div id="menu">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
     </ul>
+    <div class="hamburgermenu">
+      <button type="button" class="menu-btn" v-on:click="open = !open">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+      <div class="menu" v-bind:class="{ 'is-active': open }">
+        <li class="menu__item"><router-link to="/Mypage">TOP</router-link></li>
+        <li class="menu__item"><router-link to="/Form">POST</router-link></li>
+        <li class="menu__item">
+          <router-link to="/" id="Logout" v-on:click="Logout"
+            >LOGOUT</router-link
+          >
+        </li>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,6 +38,7 @@ export default {
   data() {
     return {
       user: this.user,
+      open: false,
     }
   },
   methods: {
@@ -90,43 +106,137 @@ export default {
   display: none;
 }
 
+#menubtn img {
+  width: 100%;
+  max-width: 50px;
+}
+.w1000 {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+nav {
+  background-color: #ccc;
+  padding: 20px 3%;
+}
+
+.nav-hidden {
+  display: none;
+}
+.hamburgermenu {
+  display: none;
+}
+
 @media (max-width: 670px) {
-  .menuIcon {
-    display: flex;
-  }
   .content {
     display: none;
   }
-  .menu {
-    position: relative;
-    height: 90%;
-    width: 10%;
+  .hamburgermenu {
     display: flex;
-    justify-content: flex-end;
-    box-sizing: border-box;
+  }
+  /*ハンバーガーボタン*/
+  .hamburger {
+    display: block;
+    position: fixed;
+    z-index: 3;
+    right: 13px;
+    top: 12px;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .hamburger span {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    left: 6px;
+    background: white;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+  .hamburger span:nth-child(1) {
+    top: 10px;
+  }
+  .hamburger span:nth-child(2) {
+    top: 20px;
+  }
+  .hamburger span:nth-child(3) {
+    top: 30px;
   }
 
-  .menu div {
-    position: absolute;
-    left: 0;
-    height: 30%;
-    width: 80%;
-    color: white;
-    border-radius: 2px;
+  /* ナビ開いてる時のボタン */
+  .hamburger.active span:nth-child(1) {
+    top: 16px;
+    left: 6px;
+    background: #fff;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+
+  .hamburger.active span:nth-child(2),
+  .hamburger.active span:nth-child(3) {
+    top: 16px;
+    background: #fff;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  /*ハンバーガーボタン*/
+  .menu-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #b1221a;
+  }
+
+  /*----------------------------
+* メニュー本体
+*----------------------------*/
+  .menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    background: #fff3b8;
+  }
+  .menu__item {
+    list-style-type: none;
+    width: 100%;
+    height: auto;
+    padding: 0.5em 1em;
+    text-align: center;
+    color: #fff;
     box-sizing: border-box;
   }
 
-  .menu div:nth-of-type(1) {
-    bottom: 10%;
+  /*----------------------------
+* アニメーション部分
+*----------------------------*/
+
+  /* アニメーション前のメニューの状態 */
+  .menu {
+    transform: translateX(100vw);
+    transition: all 0.3s linear;
   }
-  .menu div:nth-of-type(2) {
-    bottom: 5%;
-  }
-  .menu div:nth-of-type(3) {
-    bottom: 0%;
+  /* アニメーション後のメニューの状態 */
+  .menu.is-active {
+    transform: translateX(0);
   }
 }
 </style>
